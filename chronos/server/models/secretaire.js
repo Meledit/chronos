@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Secretaire.belongsTo(models.Utilisateur, {
+        foreignKey: 'utilisateurId',
+        onDelete: 'SET NULL',
+      });
     }
   }
   Secretaire.init({
@@ -18,7 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     prenom: DataTypes.STRING,
     mdp: DataTypes.STRING,
     email: DataTypes.STRING,
-    premiereConnexion: DataTypes.BOOLEAN
+    utilisateurId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Utilisateur',
+        key: 'id',
+      },
+    },
   }, {
     sequelize,
     modelName: 'Secretaire',

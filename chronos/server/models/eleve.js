@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'formationId',
         onDelete: 'SET NULL',
       });
+
+      Eleve.belongsTo(models.Utilisateur, {
+        foreignKey: 'utilisateurId',
+        onDelete: 'SET NULL',
+      });
     }
   }
   Eleve.init({
@@ -24,11 +29,17 @@ module.exports = (sequelize, DataTypes) => {
     numeroEtudiant: DataTypes.STRING,
     trombinoscope: DataTypes.STRING,
     tiersTemps: DataTypes.BOOLEAN,
-    premiereConnexion: DataTypes.BOOLEAN,
     formationId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Formation',
+        key: 'id',
+      },
+    },
+    utilisateurId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Utilisateur',
         key: 'id',
       },
     },
